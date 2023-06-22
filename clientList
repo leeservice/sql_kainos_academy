@@ -1,0 +1,4 @@
+SELECT clientName AS `Client name`, fullName AS `Sales employee`, CONCAT(projectName, ', ') AS `Projects client is involved in` FROM `client` 
+JOIN salesEmployee USING(salesEmployeeID) 
+JOIN `project` USING(clientID)
+GROUP BY clientName;
