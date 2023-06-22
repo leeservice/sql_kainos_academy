@@ -5,28 +5,28 @@ BEGIN
     START TRANSACTION;
 
     -- Create the DB
-    create database kainoos_sql_db;
+    CREATE DATABASE IF NOT EXISTS kainoos_sql_db;
 
     -- Add tables
 
-CREATE table sales_Employee (
+CREATE TABLE IF NOT EXISTS sales_Employee (
         salesEmployeeID smallint auto_increment,
         fullName varchar(255) NOT NULL,
-    salary Decimal NOT NULL,
-    bankAccountNumber varchar(34) NOT NULL,
-    nationalInsuranceNumber char(11) NOT NULL,
-    commissionRate decimal NOT NULL,
-    commissionYTD decimal NOT NULL,
-    primary key(salesEmployeeID));
+   	salary Decimal(10,2) NOT NULL,
+   	bankAccountNumber varchar(34) NOT NULL,
+   	nationalInsuranceNumber char(11) NOT NULL,
+   	commissionRate decimal NOT NULL,
+   	commissionYTD decimal NOT NULL,
+   	primary key(salesEmployeeID));
 
-CREATE TABLE client (
+CREATE TABLE IF NOT EXISTS client (
         clientID smallint auto_increment,
         fullName varchar(50) NOT NULL, 
-    address varchar(50) NOT NULL,
-    phone varchar(20),
-    dateJoined date,
-    salesEmployeeID smallint,
-    primary key(clientID));
+   	address varchar(50) NOT NULL,
+   	phone varchar(20),
+   	dateJoined date,
+   	salesEmployeeID smallint,
+   	primary key(clientID));
     
 ALTER TABLE client
         ADD CONSTRAINT k_client_salaesemployeeid
@@ -34,35 +34,32 @@ ALTER TABLE client
         REFERENCES sales_Employee (SalesEmployeeID);
 
 CREATE TABLE IF NOT EXISTS delivery_Employee(
-deliveryEmployeeID smallint PRIMARY KEY AUTO_INCREMENT,
-fullName varchar(50) NOT NULL,
-salary decimal(10,2) NOT NULL,
-bankAccountNumber varchar(34) NOT NULL,
-nationalInsuranceNumber char(11)
-);
+	deliveryEmployeeID smallint PRIMARY KEY AUTO_INCREMENT,
+	fullName varchar(50) NOT NULL,
+	salary decimal(10,2) NOT NULL,
+	bankAccountNumber varchar(34) NOT NULL,
+	nationalInsuranceNumber char(11));
 
 CREATE TABLE IF NOT EXISTS delivery_Employee_Project(
-deliveryEmployeeID smallint NOT NULL,
-projectID smallint NOT NULL,
-startDate date NOT NULL,
-endDate date,
-CONSTRAINT FK_delEmpID FOREIGN KEY(deliveryEmployeeID) REFERENCES delivery_Employee(deliveryEmployeeID),
-CONSTRAINT FK_projectID FOREIGN KEY(projectID) REFERENCES project(projectID),
-PRIMARY KEY(deliveryEmployeeID, projectID)
-);
+	deliveryEmployeeID smallint NOT NULL,
+	projectID smallint NOT NULL,
+	startDate date NOT NULL,
+	endDate date,
+	CONSTRAINT FK_delEmpID FOREIGN KEY(deliveryEmployeeID) REFERENCES delivery_Employee(deliveryEmployeeID),
+	CONSTRAINT FK_projectID FOREIGN KEY(projectID) REFERENCES project(projectID),
+	PRIMARY KEY(deliveryEmployeeID, projectID));
 
-    create table technologies (
+CREATE TABLE IF NOT EXISTS technologies (
 	technologyID smallint primary key auto_increment,
-    `name` varchar(50) not null,
-    description varchar(200) not null);
+    	`name` varchar(50) not null,
+    	description varchar(200) not null);
     
-    create table technologies_Project (
+CREATE TABLE IF NOT EXISTS technologies_Project (
 	technologiesProjectID smallint primary key auto_increment,
-    technologyID smallint,
-    foreign key (technologyID) references technologies(techologyID),
-    projectID smallint,
-    foreign key (projectID) references project(projectID)
-    );
+    	technologyID smallint,
+    	foreign key (technologyID) references technologies(techologyID),
+    	projectID smallint,
+    	foreign key (projectID) references project(projectID));
    
 
 END $$
