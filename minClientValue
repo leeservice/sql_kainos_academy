@@ -1,0 +1,1 @@
+SELECT MIN(projectValue) as 'Lowest Project Value', clientName AS 'Client Name' FROM `client` JOIN `project` ON clientID;

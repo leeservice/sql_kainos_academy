@@ -1,0 +1,1 @@
+SELECT clientName AS 'Client Name', AVG(projectValue) AS 'Average Project Value' FROM `client` JOIN `project` ON clientID;
